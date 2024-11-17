@@ -15,7 +15,7 @@ export interface PageData {
     name: string;
 	domain: string;
 	actionLink: string;
-
+	gtagId: string;
 	// Content
 	contentBlocks: any[];
 	articleHeading: string;
@@ -79,6 +79,7 @@ export async function load(event): Promise<PageData> {
 		articleHeading: data[0]['article heading'],
 		articleTitle: data[0]['article title'],
 		articleSubtitle: data[0]['article subtitle'],
+		gtagId: data[0]['google tag id'],
 		contentBlocks: blocks,
 	}
 }

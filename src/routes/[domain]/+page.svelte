@@ -1,6 +1,15 @@
 <svelte:head>
     <title>{data.name}</title>
     <meta name="description" content={data.description} />
+    {#if data.gtagId}
+        <script async src="https://www.googletagmanager.com/gtag/js?id={data.gtagId}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', {data.gtagId});
+        </script>
+    {/if}
 </svelte:head>
 
 <script lang="ts">
