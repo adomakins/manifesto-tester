@@ -10,9 +10,9 @@ const domains = [
 ]
 
 export const reroute: Reroute = ({ url }) => {
-    if (building) return;
 
     const root = url.host.split(".")[0];
+    console.log("Root:", root);
 
     if (domains.includes(root)) {
         return `/${root}`;
