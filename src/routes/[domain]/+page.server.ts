@@ -1,7 +1,6 @@
 import notionQuery from '$lib/server/query';
 import { redirect } from '@sveltejs/kit';
 import { getAllBlocks } from '$lib/server/content';
-import { PUBLIC_TEST_DATABASE_DOMAIN } from '$env/static/public';
 import { building } from '$app/environment';
 
 export const prerender = true;
@@ -43,10 +42,18 @@ export interface PageData {
 
 export async function load(event): Promise<PageData> {
 
+	let testDomain: string | undefined;
+
+	try {
+        testDomain = (await import('$env/static/public')).PUBLIC_TEST_DATABASE_DOMAIN;
+    } catch {
+        testDomain = undefined;
+    }
+
 	// Pull out the root domain from the request (subdomain or not)
     const root = building 
         ? event.params.domain 
-        : (PUBLIC_TEST_DATABASE_DOMAIN || event.url.host.split(".")[0]);
+        : (testDomain || event.url.host.split(".")[0]);
     // console.log("Root:", root);
 
 	// Query the ideas database to find the site data

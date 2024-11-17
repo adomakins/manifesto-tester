@@ -10,13 +10,19 @@ const domains = [
     'jetpost',
 ]
 
-export const reroute: Reroute = ({ url }) => {
-    // Skip rerouting during prerendering
-    if (building) return;
+// Get test domain value at module initialization
+let TEST_DOMAIN: string | undefined;
+try {
+    // Using require-style import for synchronous access
+    TEST_DOMAIN = process.env.PUBLIC_TEST_DATABASE_DOMAIN;
+} catch {
+    TEST_DOMAIN = undefined;
+}
 
-    const root = building 
-        ? url.host.split(".")[0]
-        : (PUBLIC_TEST_DATABASE_DOMAIN || url.host.split(".")[0]);
+export const reroute: Reroute = ({ url }) => {
+    if (building) return;
+    
+    const root = TEST_DOMAIN || url.host.split(".")[0];
 
     if (domains.includes(root)) {
         return `/${root}`;
