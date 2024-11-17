@@ -2,6 +2,9 @@ import notionQuery from '$lib/server/query';
 import { redirect } from '@sveltejs/kit';
 import { getAllBlocks } from '$lib/server/content';
 
+// export const prerender = true;
+// Causes a 404 error on Vercel
+
 export function entries() {
 	// Add all site domains here to enable pre-rendering
 	return [
