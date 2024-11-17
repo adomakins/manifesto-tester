@@ -43,6 +43,7 @@ export interface PageData {
 export async function load(event): Promise<PageData> {
 
 	const root = event.params.domain;
+	console.log("Root:", root);
 
 	// Query the ideas database to find the site data
 	const data = await notionQuery('ideas', {
