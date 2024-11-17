@@ -21,7 +21,7 @@ export const reroute: Reroute = ({ url }) => {
     console.log("Host:", url.host);
 
     // Skip Vercel internal requests
-    if (url.pathname.split('/').length > 1) {
+    if (url.pathname.split('/').length > 2) {
         console.log("Skipping multi-level path:", url.pathname);
         return;
     }
