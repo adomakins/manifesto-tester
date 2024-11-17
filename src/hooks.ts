@@ -1,4 +1,5 @@
 import type { Reroute } from '@sveltejs/kit';
+import { building } from '$app/environment';
 import { PUBLIC_TEST_DATABASE_DOMAIN } from '$env/static/public';
 
 const domains = [
@@ -10,17 +11,14 @@ const domains = [
 ]
 
 export const reroute: Reroute = ({ url }) => {
-    let root;
-    if (PUBLIC_TEST_DATABASE_DOMAIN) {
-        root = PUBLIC_TEST_DATABASE_DOMAIN;
-    } else {
-        root = url.host.split(".")[0];
-    }
+    // Skip rerouting during prerendering
+    if (building) return;
 
-    //console.log("Root:", root);
-    //console.log("Full path:", `${url.host}/${root}`);
-    
-	if (domains.includes(root)) {
-		return `/${root}`;
-	}
+    const root = building 
+        ? url.host.split(".")[0]
+        : (PUBLIC_TEST_DATABASE_DOMAIN || url.host.split(".")[0]);
+
+    if (domains.includes(root)) {
+        return `/${root}`;
+    }
 };
