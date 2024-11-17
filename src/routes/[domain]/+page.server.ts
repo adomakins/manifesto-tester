@@ -1,9 +1,6 @@
 import notionQuery from '$lib/server/query';
 import { redirect } from '@sveltejs/kit';
 import { getAllBlocks } from '$lib/server/content';
-import { building } from '$app/environment';
-
-export const prerender = true;
 
 export function entries() {
 	// Add all site domains here to enable pre-rendering
