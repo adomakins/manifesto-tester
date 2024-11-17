@@ -42,21 +42,7 @@ export interface PageData {
 
 export async function load(event): Promise<PageData> {
 
-	let root: string;
-
-	if (building) {
-		root = event.params.domain;
-	} else {
-		let testDomain: string | undefined;
-
-		try {
-			testDomain = (await import('$env/static/public')).PUBLIC_TEST_DATABASE_DOMAIN;
-		} catch {
-			testDomain = undefined;
-		}
-
-		root = testDomain || event.url.host.split(".")[0];
-	}
+	const root = event.params.domain;
 
 	// Query the ideas database to find the site data
 	const data = await notionQuery('ideas', {
